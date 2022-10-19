@@ -30,5 +30,19 @@ public class ParkingLot {
       return "Failed";
     }
 
+    public String pickUp() throws Exception {
+        Stream<Boolean> usedParks =this.parks.stream()
+                .map(Park::getStates)
+                .filter(states -> states == true);
+        if(usedParks != null) {
+            this.parks.stream()
+                    .filter(Park::getStates)
+                    .findFirst()
+                    .orElseThrow(Exception::new)
+                    .setStates(false);
+        }
+        return "Failed";
+    }
+
 
 }
