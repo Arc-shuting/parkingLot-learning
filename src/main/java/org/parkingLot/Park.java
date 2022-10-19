@@ -3,11 +3,19 @@ package org.parkingLot;
 public class Park {
     Boolean states = false;
 
-    public void checkIn() {
-        new Park().states = true;
+    public Boolean getStates() {
+        return states;
+    }
+
+    public void setStates(Boolean states) {
+        this.states = states;
+    }
+
+  /*  public void checkIn() {
+        this.states = true;
     }
 
     public void pickUp() {
-        new Park().states = false;
-    }
+        this.states = false;
+    }*/
 }
