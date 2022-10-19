@@ -1,28 +1,29 @@
 package org.parkingLot;
 
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ParkingBoy {
-    private ArrayList<ParkingLot> parkingLots = new ArrayList<>();
-
-    public ArrayList<ParkingLot> getParkingLots() {
-        return parkingLots;
-    }
+    private final ArrayList<ParkingLot> parkingLots;
+    private final AtomicInteger Id = new AtomicInteger();
+    private final int parkingBoyId;
 
     public ParkingBoy(ArrayList<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
+        this.parkingBoyId = Id.incrementAndGet() ;
     }
 
-    public ParkingLot checkInParkingLot(ArrayList<ParkingLot> parkingLots) {
-        for (int i = 0; i < parkingLots.size() - 1; i++) {
-            int lastParkingLot = ParkingLot.getRemainPark(parkingLots.get(i));
-            int nextParkingLot = ParkingLot.getRemainPark(parkingLots.get(i + 1));
-            if (lastParkingLot > nextParkingLot) {
-                int temp = lastParkingLot;
-                lastParkingLot = nextParkingLot;
-                nextParkingLot = temp;
-            }
-        }
-        return parkingLots.get(parkingLots.size() - 1);
+    public int getParkingBoyId() {
+        return parkingBoyId;
     }
-}
+
+    public Optional chooseParkingLot() {
+         Optional<ParkingLot> choice = parkingLots.stream()
+                 .sorted( (p1, p2) -> -Integer.compare(p1.getRemainParks(), p2.getRemainParks()))
+                 .findFirst();
+        return choice;
+    }
+
+    }
+

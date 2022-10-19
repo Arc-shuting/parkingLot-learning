@@ -7,7 +7,18 @@ import java.util.stream.Stream;
 public class ParkingLot {
     private final List<Park> parks;
     private int parkingLotId;
-    private AtomicInteger Id = new AtomicInteger();
+    private int remainNum;
+
+    public int getRemainParks() {
+        remainNum = this.parks.stream()
+                .map(Park::getStates)
+                .filter(states -> !states)
+                .toList()
+                .size();
+        return remainNum;
+    }
+
+    private final AtomicInteger Id = new AtomicInteger();
     private final static String TICKET = "ticket";
 
     public ParkingLot(List<Park> parks) {
