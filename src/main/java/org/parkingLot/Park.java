@@ -1,7 +1,12 @@
 package org.parkingLot;
 
 public class Park {
-    Boolean states = false;
+
+    private Boolean states;
+
+    public Park() {
+        this.states = false;
+    }
 
     public Boolean getStates() {
         return states;
@@ -11,11 +16,4 @@ public class Park {
         this.states = states;
     }
 
-  /*  public void checkIn() {
-        this.states = true;
-    }
-
-    public void pickUp() {
-        this.states = false;
-    }*/
 }
