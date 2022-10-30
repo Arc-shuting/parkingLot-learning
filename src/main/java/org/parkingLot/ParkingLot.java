@@ -4,7 +4,10 @@ import java.util.List;
 
 public class ParkingLot {
     private final List<Park> parks;
-    private int parkingLotId;
+
+    private final String parkingLotId;
+
+    private List<Tickets> tickets;
 
     public ParkingLot(List<Park> parks, String parkingLotId) {
         this.parks = parks;
@@ -39,17 +42,14 @@ public class ParkingLot {
         return "success";
     }
 
-    public String pickUp() throws Exception {
-        /*Stream<Boolean> usedParks = this.parks.stream()
-                .map(Park::getStates)
-                .filter(states -> states);*/
-        this.parks.stream()
-                .filter(Park::getStates)
+    public String pickUp(Tickets tickets) throws Exception {
+        this.tickets.stream()
+                .filter(item -> item.getCarNum().equals(tickets.getCarNum()))
                 .findFirst()
                 .orElseThrow(Exception::new)
+                .getPark()
                 .setStates(false);
         this.tickets.remove(tickets);
         return "success";
     }
 }
-
