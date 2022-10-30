@@ -1,53 +1,46 @@
-/*
 package org.parkingLot;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ParkingBoy {
 
-    private final ArrayList<ParkingLot> parkingLots;
-    private final int parkingBoyId;
+    private final List<ParkingLot> parkingLots;
+    private final String parkingBoyId;
 
-    public ParkingBoy(ArrayList<ParkingLot> parkingLots) {
-        super();
+    public ParkingBoy(List<ParkingLot> parkingLots, String id) {
         this.parkingLots = parkingLots;
-        AtomicInteger id = new AtomicInteger();
-        this.parkingBoyId = id.incrementAndGet() ;
+        this.parkingBoyId = id;
     }
 
-    public int getParkingBoyId() {
+    public String getParkingBoyId() {
         return parkingBoyId;
     }
-    public ArrayList<ParkingLot> getParkingLots(int Id) {
-        for(int i = 0; i< parkingLots.size(); i++) {
-            if(this.parkingBoyId == Id) {
-                return this.parkingLots;
-            }
-        }
+
+    public List<ParkingLot> getParkingLots() {
+        return this.parkingLots;
+    }
+
+    public String parkingBoy(String carNum) {
+        try {
+            return this.parkingLots.stream()
+                    .max(Comparator.comparingInt(ParkingLot::getRemainParks))
+                    .orElseThrow(Exception::new)
+                    .checkIN(carNum);
+        } catch (Exception e) {
             return null;
+        }
     }
 
-    public Optional chooseParkingLot() {
-         Optional<ParkingLot> choice = parkingLots.stream()
-                 .sorted( (p1, p2) -> -Integer.compare(p1.getRemainParks(), p2.getRemainParks()))
-                 .findFirst();
-        return choice;
+    public String pickUpBoy(String id, Tickets tickets) {
+        try {
+            return this.parkingLots.stream()
+                    .filter(item -> !item.getParkingLotId().equals(id))
+                    .findFirst()
+                    .orElseThrow(Exception::new)
+                    .pickUp(tickets);
+        } catch (Exception e) {
+            return null;
+        }
     }
-
-    public String parking() {
-        chooseParkingLot().checkIN();
-    }
-
-    public void addParkingLot(List<Park>parks, int Id) {
-        parkingLots.add(new ParkingLot(parks, Id));
-    }
-    public void removeParkingLot(int Id) {
-        parkingLots.remove(getParkingLots(Id));
-    }
-
-    }
-
-*/
+}
