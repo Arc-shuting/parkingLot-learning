@@ -12,25 +12,61 @@ public class ParkingManager extends ParkingBoy{
     public ParkingManager(ArrayList<ParkingBoy> parkingBoys, ArrayList<ParkingLot> parkingLots) {
         super(parkingLots);
         this.parkingBoys = parkingBoys;
+        this.parkingLots = parkingLots;
     }
-*/
-/*
-    public ArrayList<ParkingLot> getParkingLots() {
-        return parkingLots;
-    }*//*
 
-    public ArrayList<ParkingBoy> getParkingBoys() {
+    public List<ParkingLot> getParkingLots() {
+        return parkingLots;
+    }
+
+    public List<ParkingBoy> getParkingBoys() {
         return parkingBoys;
     }
 
-    public void addParkingBoy() {
-        parkingBoys.add(new ParkingBoy());
+    public void setParkingLots(List<ParkingLot> parkingLots) {
+        this.parkingLots = parkingLots;
     }
 
-    public void dissParkingBoy() {
-        parkingBoys.add(new ParkingBoy());
+    public void setParkingBoys(List<ParkingBoy> parkingBoys) {
+        this.parkingBoys = parkingBoys;
     }
 
+    public String addParkingLot(List<Park> parks, String id) {
+        parkingLots.add(new ParkingLot(parks, id));
+        return "Success";
+    }
+    public String deleteParkingLot(String id) {
+        parkingLots = parkingLots.stream()
+                .filter(item -> item.getParkingLotId().equals(id))
+                .collect(Collectors.toList());
+        return "Success";
+    }
+
+    public String addParkingBoy(List<ParkingLot> parkingLots, String id) {
+        parkingBoys.add(new ParkingBoy(parkingLots, id));
+        return "Success";
+    }
+    public String deleteParkingBoy(String id) {
+        parkingBoys = parkingBoys.stream()
+                .filter(item -> item.getParkingBoyId().equals(id))
+                .collect(Collectors.toList());
+        return "Success";
+    }
+
+    public String parkingManager(String id, String carNum) throws Exception {
+        return this.parkingLots.stream().filter(item -> !item.getParkingLotId().equals(id))
+                .findFirst()
+                .orElseThrow(Exception::new)
+                .checkIN(carNum);
+    }
+
+    public String pickUpManager(String id, Tickets tickets) throws Exception {
+        return this.parkingBoys.stream()
+                .filter(item -> !item.getParkingBoyId().equals(id))
+                .findFirst()
+                .orElseThrow(Exception::new)
+                .pickUpBoy(id, tickets);
+    }
 }
 
 

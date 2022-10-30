@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ParkingBoy extends ParkingLot {
+public class ParkingBoy {
 
     private final ArrayList<ParkingLot> parkingLots;
     private final int parkingBoyId;

@@ -1,22 +1,22 @@
 package org.parkingLot;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ParkingLot {
     private final List<Park> parks;
     private int parkingLotId;
 
-    private final static String TICKET = "ticket";
-
+    public ParkingLot(List<Park> parks, String parkingLotId) {
+        this.parks = parks;
+        this.parkingLotId  = parkingLotId;
+        this.tickets = null;
+    }
     public List<Park> getParks() {
         return parks;
     }
 
-    public ParkingLot(List<Park> parks, int parkingLotId) {
-        this.parks = parks;
-        this.parkingLotId  = parkingLotId;
+    public String getParkingLotId() {
+        return parkingLotId;
     }
 
     public int getRemainParks() {
@@ -29,16 +29,14 @@ public class ParkingLot {
         );
     }
 
-    public String checkIN() throws Exception {
-        /*Stream<Boolean> remainParks = this.parks.stream()
-                .map(Park::getStates)
-                .filter(states -> !states);*/
+    public String checkIN(String carNum) throws Exception {
+        this.tickets.add(new Tickets(carNum));
         this.parks.stream()
                 .filter(Park::getStates)
                 .findFirst()
                 .orElseThrow(Exception::new)
                 .setStates(true);
-        return TICKET;
+        return "success";
     }
 
     public String pickUp() throws Exception {
@@ -50,7 +48,8 @@ public class ParkingLot {
                 .findFirst()
                 .orElseThrow(Exception::new)
                 .setStates(false);
-        return "Success";
+        this.tickets.remove(tickets);
+        return "success";
     }
 }
 

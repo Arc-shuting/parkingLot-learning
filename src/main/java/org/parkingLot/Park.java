@@ -7,13 +7,9 @@ public class Park {
     public Park() {
         this.states = false;
     }
-
-    public Boolean getStates() {
-        return states;
-    }
+    public Boolean getStates() { return states; }
 
     public void setStates(Boolean states) {
         this.states = states;
     }
-
 }
