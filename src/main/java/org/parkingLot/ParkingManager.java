@@ -1,16 +1,14 @@
-/*
+
 package org.parkingLot;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class ParkingManager extends ParkingBoy{
-    private final ArrayList<ParkingBoy> parkingBoys;
-    */
-/*private final ArrayList<Park> parks;*//*
+public class ParkingManager{
+    private List<ParkingBoy> parkingBoys;
+    private List<ParkingLot> parkingLots;
 
-
-    public ParkingManager(ArrayList<ParkingBoy> parkingBoys, ArrayList<ParkingLot> parkingLots) {
-        super(parkingLots);
+    public ParkingManager(List<ParkingBoy> parkingBoys, List<ParkingLot> parkingLots) {
         this.parkingBoys = parkingBoys;
         this.parkingLots = parkingLots;
     }
@@ -68,7 +66,3 @@ public class ParkingManager extends ParkingBoy{
                 .pickUpBoy(id, tickets);
     }
 }
-
-
-
-*/
